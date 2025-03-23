@@ -59,6 +59,59 @@
             break;
         }
       }
+
+      // Function to fire all conversion pixels
+      function fireConversionPixels() {
+        // Facebook Pixel
+        if (typeof fbq !== 'undefined') {
+          fbq('init', AD_CONFIG.facebook.pixelId);
+          fbq('track', 'Lead', {
+            value: AD_CONFIG.facebook.conversionValue,
+            currency: AD_CONFIG.facebook.currency,
+          });
+        }
+
+        // Google Ads
+        if (typeof gtag !== 'undefined') {
+          gtag('js', new Date());
+          gtag('config', AD_CONFIG.google.conversionId);
+          gtag('event', 'conversion', {
+            'send_to': AD_CONFIG.google.conversionId + '/' + AD_CONFIG.google.conversionLabel,
+            'value': AD_CONFIG.google.conversionValue,
+            'currency': 'USD'
+          });
+        }
+
+        // Bing Ads
+        if (typeof window.uetq !== 'undefined') {
+          window.uetq.push('event', 'Lead', {
+            'revenue_value': AD_CONFIG.bing.conversionValue,
+            'currency': 'USD'
+          });
+        }
+
+        // Taboola
+        if (typeof window._tfa !== 'undefined') {
+          window._tfa.push({
+            notify: 'event',
+            name: 'lead',
+            id: AD_CONFIG.taboola.accountId,
+            revenue: AD_CONFIG.taboola.conversionValue
+          });
+        }
+
+        // Outbrain
+        if (typeof obApi !== 'undefined') {
+          obApi('track', 'PAGE_VIEW');
+          obApi('track', 'Lead');
+        }
+      }
+
+      // Fire pixels after page load
+      window.addEventListener('load', function() {
+        // Small delay to ensure all pixel scripts are loaded
+        setTimeout(fireConversionPixels, 1000);
+      });
     </script>
 
     <!-- Facebook Pixel Code -->
@@ -71,12 +124,6 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        
-        fbq('init', AD_CONFIG.facebook.pixelId);
-        fbq('track', 'Lead', {
-          value: AD_CONFIG.facebook.conversionValue,
-          currency: AD_CONFIG.facebook.currency,
-        });
     </script>
 
     <!-- Google Ads Conversion Tracking -->
@@ -84,13 +131,6 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', AD_CONFIG.google.conversionId);
-      gtag('event', 'conversion', {
-        'send_to': AD_CONFIG.google.conversionId + '/' + AD_CONFIG.google.conversionLabel,
-        'value': AD_CONFIG.google.conversionValue,
-        'currency': 'USD'
-      });
     </script>
 
     <!-- Bing Ads UET Tag -->
@@ -104,22 +144,11 @@
           var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)
         },i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)
       })(window,document,"script","//bat.bing.com/bat.js","uetq");
-      window.uetq = window.uetq || [];
-      window.uetq.push('event', 'Lead', {
-        'revenue_value': AD_CONFIG.bing.conversionValue,
-        'currency': 'USD'
-      });
     </script>
 
     <!-- Taboola Pixel -->
     <script>
       window._tfa = window._tfa || [];
-      _tfa.push({
-        notify: 'event',
-        name: 'lead',
-        id: AD_CONFIG.taboola.accountId,
-        revenue: AD_CONFIG.taboola.conversionValue
-      });
       !function (t, f, a, x) {
         if (!document.getElementById(x)) {
           t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
@@ -156,9 +185,6 @@
         var script = _document.getElementsByTagName('script')[0];
         script.parentNode.insertBefore(tag, script);
       }(window, document);
-
-      obApi('track', 'PAGE_VIEW');
-      obApi('track', 'Lead');
     </script>
 
     <!-- Link to shared styles -->
@@ -407,22 +433,40 @@
         const contentWrapper = document.querySelector('.content-wrapper');
         const body = document.body;
 
+        // Function to show content and hide loading overlay
+        function showContent() {
+          loadingOverlay.style.opacity = '0';
+          setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+          }, 500);
+          contentWrapper.classList.add('loaded');
+        }
+
+        // Set a maximum loading time of 5 seconds
+        const loadingTimeout = setTimeout(() => {
+          console.log('Loading timeout reached, showing content');
+          showContent();
+        }, 5000);
+
         // Preload background image
         const bgImage = new Image();
         bgImage.src = 'https://sk-houston.b-cdn.net/assets/thank-you-bg.png';
         
         bgImage.onload = function() {
+          // Clear the timeout since image loaded successfully
+          clearTimeout(loadingTimeout);
           // Add loaded class to body for background image
           body.classList.add('bg-loaded');
-          
-          // Hide loading overlay
-          loadingOverlay.style.opacity = '0';
-          setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-          }, 500);
-
           // Show content
-          contentWrapper.classList.add('loaded');
+          showContent();
+        };
+
+        bgImage.onerror = function() {
+          // Clear the timeout since we're handling the error
+          clearTimeout(loadingTimeout);
+          console.error('Failed to load background image');
+          // Show content anyway
+          showContent();
         };
       });
 
