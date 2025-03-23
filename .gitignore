@@ -53,7 +53,8 @@ dist/
 .wrangler.toml.local
 .wrangler.toml.dev
 worker-configuration.json
-wrangler.toml
+worker/wrangler.toml
+!wrangler.pages.toml
 
 # Test files
 test-*.sh
