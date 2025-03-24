@@ -10,17 +10,20 @@
     function handleUrlParameters() {
       const urlParams = new URLSearchParams(window.location.search);
       
-      // Push conversion data to dataLayer
-      dataLayer.push({
-          'event': 'formSubmission',
-          'formType': 'consultation',
-          'pageType': 'thankYou',
-          'conversionValue': '100',
-          'leadSource': urlParams.get('utm_source') || 'direct',
-          'leadMedium': urlParams.get('utm_medium') || 'none',
-          'leadCampaign': urlParams.get('utm_campaign') || 'none',
-          'serviceRequested': urlParams.get('service') || 'not specified'
-      });
+      // Only push conversion data if we haven't already
+      if (!window.conversionTracked) {
+          window.conversionTracked = true;
+          dataLayer.push({
+              'event': 'formSubmission',
+              'formType': 'consultation',
+              'pageType': 'thankYou',
+              'conversionValue': '100',
+              'leadSource': urlParams.get('utm_source') || 'direct',
+              'leadMedium': urlParams.get('utm_medium') || 'none',
+              'leadCampaign': urlParams.get('utm_campaign') || 'none',
+              'serviceRequested': urlParams.get('service') || 'not specified'
+          });
+      }
       
       // Return parameters needed for the thank you message
       return {
