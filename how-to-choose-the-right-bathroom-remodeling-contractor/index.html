@@ -37,14 +37,14 @@
 		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-TWN8WJJS');</script>
+		})(window,document,'script','dataLayer','GTM-PXQBZTBK');</script>
 		<!-- End Google Tag Manager -->
 	  
 	<link rel="stylesheet" href="style.css">
   </head>
   <body>
 	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWN8WJJS"
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PXQBZTBK"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	<header class="site-header" role="banner">
@@ -274,5 +274,58 @@
 	</footer>
 	
 	<script src="form.js"></script>
+	<script>
+		// Form tracking implementation
+		document.addEventListener('DOMContentLoaded', function() {
+		  const form = document.getElementById('leadForm');
+		  const formFields = form.querySelectorAll('input, select, textarea');
+  
+		  // Track form field interactions
+		  formFields.forEach(field => {
+			field.addEventListener('focus', () => {
+			  trackFormInteraction('field_focus', { fieldName: field.name });
+			});
+  
+			field.addEventListener('change', () => {
+			  trackFormInteraction('field_complete', { 
+				fieldName: field.name,
+				fieldType: field.type
+			  });
+			});
+		  });
+  
+		  // Track form errors
+		  form.addEventListener('invalid', (e) => {
+			if (e.target.validationMessage) {
+			  trackFormInteraction('form_error', {
+				fieldName: e.target.name,
+				errorMessage: e.target.validationMessage
+			  });
+			}
+		  }, true);
+  
+		  // Track form submission
+		  form.addEventListener('submit', (e) => {
+			const formData = new FormData(form);
+			const data = {};
+			for (let [key, value] of formData.entries()) {
+			  data[key] = value;
+			}
+			
+			// Enhanced tracking data
+			trackFormInteraction('form_submit', {
+			  serviceRequested: data.service,
+			  consultationDate: data.consultationDate,
+			  arrivalWindow: data.arrivalWindow,
+			  conversionType: 'lead',
+			  conversionValue: '100',
+			  orderId: Date.now().toString(), // Unique identifier for the lead
+			  leadSource: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
+			  leadMedium: new URLSearchParams(window.location.search).get('utm_medium') || 'none',
+			  leadCampaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
+			});
+		  });
+		});
+	  </script>
   </body>
 </html>
