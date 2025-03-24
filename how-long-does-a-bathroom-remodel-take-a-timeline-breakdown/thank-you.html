@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Initialize dataLayer and handle URL parameters -->
+    <script>
+    // Initialize dataLayer
+    window.dataLayer = window.dataLayer || [];
+    
+    // Function to handle all URL parameter operations
+    function handleUrlParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Push conversion data to dataLayer
+      dataLayer.push({
+          'event': 'formSubmission',
+          'formType': 'consultation',
+          'pageType': 'thankYou',
+          'conversionValue': '100',
+          'leadSource': urlParams.get('utm_source') || 'direct',
+          'leadMedium': urlParams.get('utm_medium') || 'none',
+          'leadCampaign': urlParams.get('utm_campaign') || 'none',
+          'serviceRequested': urlParams.get('service') || 'not specified'
+      });
+      
+      // Return parameters needed for the thank you message
+      return {
+        service: urlParams.get('service'),
+        date: urlParams.get('date'),
+        time: urlParams.get('time'),
+        name: urlParams.get('name')
+      };
+    }
+    
+    // Execute dataLayer push immediately
+    handleUrlParameters();
+    </script>
+    
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -311,12 +345,8 @@
         });
       }
 
-      // Get URL parameters
-      const params = new URLSearchParams(window.location.search);
-      const service = params.get('service');
-      const date = params.get('date');
-      const time = params.get('time');
-      const name = params.get('name');
+      // Get parameters and update the message
+      const { service, date, time, name } = handleUrlParameters();
 
       // Create dynamic message if parameters exist
       if (service && date && time) {

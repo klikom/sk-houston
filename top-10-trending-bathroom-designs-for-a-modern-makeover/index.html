@@ -10,13 +10,35 @@
 	<meta property="og:description" content="Discover the top 10 trending bathroom designs for a modern makeover. Get expert insights from SK Houston Constructions on creating your dream bathroom.">
 	<meta property="og:type" content="article">
 	<title>Top 10 Trending Bathroom Designs for a Modern Makeover - SK Houston Constructions</title>
+	
+	<!-- Initialize dataLayer -->
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		dataLayer.push({
+			'pageType': 'article',
+			'articleTitle': 'Top 10 Trending Bathroom Designs for a Modern Makeover',
+			'articleCategory': 'Bathroom Remodeling',
+			'contentGroup': 'Bathroom Remodeling'
+		});
+	
+		// Form tracking function
+		function trackFormInteraction(action, formData = {}) {
+			dataLayer.push({
+				'event': 'formInteraction',
+				'formAction': action,
+				'formType': 'consultation',
+				...formData
+			});
+		}
+		</script>
+		
 		<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-TWN8WJJS');</script>
-	<!-- End Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-TWN8WJJS');</script>
+		<!-- End Google Tag Manager -->
 	
 	<link rel="stylesheet" href="style.css">
   </head>
@@ -258,5 +280,51 @@
 	</footer>
 	
 	<script src="form.js"></script>
+	<script>
+	  // Form tracking implementation
+	  document.addEventListener('DOMContentLoaded', function() {
+		const form = document.getElementById('leadForm');
+		const formFields = form.querySelectorAll('input, select, textarea');
+
+		// Track form field interactions
+		formFields.forEach(field => {
+		  field.addEventListener('focus', () => {
+			trackFormInteraction('field_focus', { fieldName: field.name });
+		  });
+
+		  field.addEventListener('change', () => {
+			trackFormInteraction('field_complete', { 
+			  fieldName: field.name,
+			  fieldType: field.type
+			});
+		  });
+		});
+
+		// Track form errors
+		form.addEventListener('invalid', (e) => {
+		  if (e.target.validationMessage) {
+			trackFormInteraction('form_error', {
+			  fieldName: e.target.name,
+			  errorMessage: e.target.validationMessage
+			});
+		  }
+		}, true);
+
+		// Track form submission
+		form.addEventListener('submit', (e) => {
+		  const formData = new FormData(form);
+		  const data = {};
+		  for (let [key, value] of formData.entries()) {
+			data[key] = value;
+		  }
+		  
+		  trackFormInteraction('form_submit', {
+			serviceRequested: data.service,
+			consultationDate: data.consultationDate,
+			arrivalWindow: data.arrivalWindow
+		  });
+		});
+	  });
+	</script>
   </body>
 </html>
