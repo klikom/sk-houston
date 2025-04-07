@@ -3,44 +3,112 @@
  * Sends form data to Trello for lead management
  */
 
+// Configure worker URL based on environment
+const WORKER_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'https://trello-api-dev.workers.dev'
+  : 'https://trello-api.lingering-bar-b004.workers.dev';
+
 document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('form');
-  if (!form) return;
+  const mainForm = document.querySelector('#leadForm');
+  const midArticleForm = document.querySelector('#midArticleLeadForm');
+  
+  if (!mainForm) return;
   
   // Get source and pixel from URL parameters
   const currentParams = new URLSearchParams(window.location.search);
   const source = currentParams.get('source');
   const pixel = currentParams.get('pixel');
   
-  // Update form ID to match the provided code
-  form.id = 'leadForm';
-  
   // Handle Other service option
   const serviceSelect = document.getElementById('service');
   const otherServiceGroup = document.getElementById('otherServiceGroup');
   const otherServiceInput = document.getElementById('otherService');
   
-  serviceSelect.addEventListener('change', function() {
-    if (this.value === 'Other') {
-      otherServiceGroup.style.display = 'block';
-      otherServiceInput.required = true;
-    } else {
-      otherServiceGroup.style.display = 'none';
-      otherServiceInput.required = false;
-      otherServiceInput.value = '';
-    }
-  });
+  if (serviceSelect && otherServiceGroup && otherServiceInput) {
+    serviceSelect.addEventListener('change', function() {
+      if (this.value === 'Other') {
+        otherServiceGroup.style.display = 'block';
+        otherServiceInput.required = true;
+      } else {
+        otherServiceGroup.style.display = 'none';
+        otherServiceInput.required = false;
+        otherServiceInput.value = '';
+      }
+    });
+  }
   
-  // Add validation to required fields
-  const requiredFields = form.querySelectorAll('[required]');
+  // Add validation to required fields in main form
+  const requiredFields = mainForm.querySelectorAll('[required]');
   requiredFields.forEach(field => {
     field.addEventListener('blur', function() {
       validateField(field);
     });
   });
   
-  // Form submission handler
-  document.getElementById('leadForm').addEventListener('submit', async function(event) {
+  // Handle mid-article form submission
+  if (midArticleForm) {
+    midArticleForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Get values from mid-form
+      const midName = document.getElementById('midName').value;
+      const midPhone = document.getElementById('midPhone').value;
+      
+      // Make sure values are valid
+      if (!midName || !midPhone) {
+        if (!midName) addErrorMessage(document.getElementById('midName'), 'Name is required');
+        if (!midPhone) addErrorMessage(document.getElementById('midPhone'), 'Phone is required');
+        return;
+      }
+      
+      // Track form interaction for mid-form
+      if (typeof trackFormInteraction === 'function') {
+        trackFormInteraction('mid_form_submit', {
+          conversionType: 'mid_lead',
+          leadSource: source || 'direct',
+          leadMedium: new URLSearchParams(window.location.search).get('utm_medium') || 'none',
+          leadCampaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
+        });
+      }
+      
+      // Fill in values in main form
+      document.getElementById('fullName').value = midName;
+      document.getElementById('phone').value = midPhone;
+      
+      // Scroll to main form
+      const mainFormElement = document.querySelector('.contact-section');
+      if (mainFormElement) {
+        mainFormElement.scrollIntoView({ behavior: 'smooth' });
+        
+        // Highlight the main form fields that need to be filled
+        setTimeout(() => {
+          const emailField = document.getElementById('email');
+          if (emailField) {
+            emailField.focus();
+            emailField.style.borderColor = '#4299e1';
+            emailField.style.boxShadow = '0 0 0 3px rgba(66, 153, 225, 0.3)';
+            
+            // Remove highlight after 2 seconds
+            setTimeout(() => {
+              emailField.style.borderColor = '';
+              emailField.style.boxShadow = '';
+            }, 2000);
+          }
+        }, 800);
+      }
+    });
+    
+    // Add validation to mid-form fields
+    const midRequiredFields = midArticleForm.querySelectorAll('[required]');
+    midRequiredFields.forEach(field => {
+      field.addEventListener('blur', function() {
+        validateField(field);
+      });
+    });
+  }
+  
+  // Form submission handler for main form
+  mainForm.addEventListener('submit', async function(event) {
     event.preventDefault();
     
     // Validate all required fields before submission
@@ -56,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Show loading state
-    const submitBtn = form.querySelector('.submit-btn');
+    const submitBtn = mainForm.querySelector('.submit-btn');
     const originalBtnText = submitBtn.textContent;
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
@@ -82,14 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
       message: document.getElementById('message').value,
       source: source || 'direct',
       pixel: pixel || '',
-      articleName: articleName // Add article name to form data
+      articleName: articleName, // Add article name to form data
+      fromMidForm: document.getElementById('midName') && document.getElementById('midName').value === formData.fullName
     };
     
     try {
       console.log('Submitting form data:', formData);
+      console.log('Using worker URL:', WORKER_URL);
       
       // Submit to our Cloudflare Worker
-      const response = await fetch('https://trello-api.lingering-bar-b004.workers.dev', {
+      const response = await fetch(WORKER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,6 +225,8 @@ function validateField(field) {
     existingError.remove();
   }
   
+  field.style.borderColor = '';
+  
   let isValid = true;
   
   // Check for empty required fields
@@ -173,7 +245,7 @@ function validateField(field) {
   }
   
   // Phone validation
-  if (field.id === 'phone' && field.value.trim()) {
+  if ((field.id === 'phone' || field.id === 'midPhone') && field.value.trim()) {
     const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     if (!phoneRegex.test(field.value)) {
       addErrorMessage(field, 'Please enter a valid phone number');
@@ -192,13 +264,13 @@ function validateField(field) {
 function addErrorMessage(field, message) {
   const errorDiv = document.createElement('div');
   errorDiv.className = 'error-message';
-  errorDiv.style.color = '#e53e3e';
+  errorDiv.style.color = field.closest('.mid-article-lead-form') ? '#ffdddd' : '#e53e3e';
   errorDiv.style.fontSize = '0.875rem';
   errorDiv.style.marginTop = '0.25rem';
   errorDiv.textContent = message;
   
   field.parentNode.appendChild(errorDiv);
-  field.style.borderColor = '#e53e3e';
+  field.style.borderColor = field.closest('.mid-article-lead-form') ? '#ffdddd' : '#e53e3e';
   
   // Remove error styling when field is focused
   field.addEventListener('focus', function() {

@@ -9,10 +9,16 @@ const WORKER_URL = window.location.hostname === 'localhost' || window.location.h
   : 'https://trello-api.lingering-bar-b004.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function() {
-  const mainForm = document.querySelector('#leadForm');
+  let mainForm = document.querySelector('#leadForm');
   const midArticleForm = document.querySelector('#midArticleLeadForm');
   
-  if (!mainForm) return;
+  if (!mainForm) {
+    const form = document.querySelector('form');
+    if (!form) return;
+    // Update form ID to match the provided code
+    form.id = 'leadForm';
+    mainForm = document.getElementById('leadForm');
+  }
   
   // Get source and pixel from URL parameters
   const currentParams = new URLSearchParams(window.location.search);
