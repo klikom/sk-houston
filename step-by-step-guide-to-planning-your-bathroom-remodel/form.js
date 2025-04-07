@@ -5,7 +5,7 @@
 
 // Configure worker URL based on environment
 const WORKER_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'https://trello-api-dev.workers.dev'
+  ? 'https://trello-api.lingering-bar-b004.workers.dev'
   : 'https://trello-api.lingering-bar-b004.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function() {
