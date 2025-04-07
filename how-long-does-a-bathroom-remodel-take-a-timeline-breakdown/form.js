@@ -9,10 +9,14 @@ const WORKER_URL = window.location.hostname === 'localhost' || window.location.h
   : 'https://trello-api.lingering-bar-b004.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function() {
-  const mainForm = document.querySelector('#leadForm');
+  // Get main form and mid-article form
+  const mainForm = document.querySelector('#leadForm') || document.querySelector('form');
   const midArticleForm = document.querySelector('#midArticleLeadForm');
   
   if (!mainForm) return;
+  
+  // Ensure the main form has the correct ID
+  mainForm.id = 'leadForm';
   
   // Get source and pixel from URL parameters
   const currentParams = new URLSearchParams(window.location.search);
@@ -45,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Handle mid-article form submission
+  // Handle mid-article form submission if it exists
   if (midArticleForm) {
     midArticleForm.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -107,8 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Form submission handler for main form
-  mainForm.addEventListener('submit', async function(event) {
+  // Form submission handler for main form (using the approach from the working version)
+  document.getElementById('leadForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     
     // Validate all required fields before submission
