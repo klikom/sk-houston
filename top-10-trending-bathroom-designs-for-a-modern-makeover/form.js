@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
       source: source || 'direct',
       pixel: pixel || '',
       articleName: articleName, // Add article name to form data
-      fromMidForm: document.getElementById('midName') && document.getElementById('midName').value === formData.fullName
+      fromMidForm: document.getElementById('midName') && document.getElementById('midName').value === document.getElementById('fullName').value
     };
     
     try {

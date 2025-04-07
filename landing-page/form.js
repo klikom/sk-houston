@@ -9,16 +9,14 @@ const WORKER_URL = window.location.hostname === 'localhost' || window.location.h
   : 'https://trello-api.lingering-bar-b004.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function() {
-  let mainForm = document.querySelector('#leadForm');
+  // Get main form and mid-article form
+  const mainForm = document.querySelector('#leadForm') || document.querySelector('form');
   const midArticleForm = document.querySelector('#midArticleLeadForm');
   
-  if (!mainForm) {
-    const form = document.querySelector('form');
-    if (!form) return;
-    // Update form ID to match the provided code
-    form.id = 'leadForm';
-    mainForm = document.getElementById('leadForm');
-  }
+  if (!mainForm) return;
+  
+  // Ensure the main form has the correct ID
+  mainForm.id = 'leadForm';
   
   // Get source and pixel from URL parameters
   const currentParams = new URLSearchParams(window.location.search);
@@ -51,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Handle mid-article form submission
+  // Handle mid-article form submission if it exists
   if (midArticleForm) {
     midArticleForm.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -113,8 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Form submission handler for main form
-  mainForm.addEventListener('submit', async function(event) {
+  // Form submission handler for main form (using the approach from the working version)
+  document.getElementById('leadForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     
     // Validate all required fields before submission
@@ -157,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
       source: source || 'direct',
       pixel: pixel || '',
       articleName: articleName, // Add article name to form data
-      fromMidForm: document.getElementById('midName') && document.getElementById('midName').value === formData.fullName
+      fromMidForm: document.getElementById('midName') && document.getElementById('midName').value === document.getElementById('fullName').value
     };
     
     try {
