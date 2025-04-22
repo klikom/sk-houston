@@ -211,22 +211,136 @@
       
       .hero-benefits {
         margin: 32px 0;
+        width: 100%;
       }
       
       .benefit-badge {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
         margin-bottom: 16px;
+        transition: all 0.3s ease;
+      }
+      
+      .benefit-badge:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+      }
+      
+      .benefit-badge svg {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        margin-top: 4px;
       }
       
       .benefit-badge span {
-        margin-left: 12px;
+        color: white;
+        font-size: clamp(14px, 2vw, 16px);
+        font-weight: 500;
+        line-height: 1.6;
+        letter-spacing: 0.2px;
+      }
+      
+      .benefit-title {
+        color: #FFD700;
+        font-size: clamp(16px, 2.5vw, 18px);
         font-weight: 600;
-        font-size: 18px;
+        margin-bottom: 4px;
+        display: block;
       }
       
       @media (max-width: 768px) {
+        .benefit-badge {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 16px;
+        }
+        
+        .benefit-badge svg {
+          width: 32px;
+          height: 32px;
+          margin-top: 0;
+          margin-bottom: 12px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .benefit-badge {
+          padding: 12px;
+        }
+        
+        .benefit-badge svg {
+          width: 28px;
+          height: 28px;
+          margin-bottom: 10px;
+        }
+      }
+      
+      .benefit-title {
+        color: #FFD700;
+        font-size: clamp(16px, 3vw, 20px);
+        display: block;
+        margin-bottom: 8px;
+      }
+      
+      @media (max-width: 992px) {
+        .hero-benefits {
+          margin: 24px 0;
+        }
+        
+        .benefit-badge {
+          padding: 14px 18px;
+          gap: 16px;
+        }
+        
+        .benefit-badge svg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .hero-benefits {
+          margin: 20px 0;
+        }
+        
+        .benefit-badge {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        
+        .benefit-badge svg {
+          width: 36px;
+          height: 36px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .hero-benefits {
+          margin: 16px 0;
+        }
+        
+        .benefit-badge {
+          padding: 12px 14px;
+          gap: 12px;
+        }
+        
+        .benefit-badge svg {
+          width: 32px;
+          height: 32px;
+        }
+        
         .benefit-badge span {
+          font-size: 14px;
+        }
+        
+        .benefit-title {
           font-size: 16px;
         }
       }
@@ -469,9 +583,31 @@
       
       /* Services section */
       .services-section {
-        background-color: var(--gray-50);
+        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
       }
-      
+
+      .services-section .section-title,
+      .services-section .section-subtitle {
+        color: white;
+      }
+
+      .services-section .benefit-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-top: none;
+      }
+
+      .services-section .benefit-content h3 {
+        color: #FFD700;
+      }
+
+      .services-section .benefit-content p {
+        color: white;
+      }
+
       .services-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -539,11 +675,45 @@
       
       /* Why choose us section */
       .why-choose-section {
-        background-color: white;
-        border-top: 1px solid var(--gray-200);
-        border-bottom: 1px solid var(--gray-200);
+        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        border-top: none;
+        border-bottom: none;
       }
-      
+
+      .why-choose-section .section-title,
+      .why-choose-section .section-subtitle {
+        color: white;
+      }
+
+      .why-choose-section .benefit-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .why-choose-section .benefit-content h3 {
+        color: #FFD700;
+      }
+
+      .why-choose-section .benefit-content p {
+        color: white;
+      }
+
+      .why-choose-section .card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .why-choose-section .card h3 {
+        color: #FFD700;
+      }
+
+      .why-choose-section .card p {
+        color: white;
+      }
+
       .benefits-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -1224,6 +1394,74 @@
           margin: 0 auto;
         }
       }
+
+      .benefit-title {
+        color: #FFD700;
+        font-size: 1.2em;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      /* Process section */
+      .process-section {
+        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        border-top: none;
+        border-bottom: none;
+      }
+
+      .process-section .section-title,
+      .process-section .section-subtitle {
+        color: white;
+      }
+
+      .process-section .benefit-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .process-section .benefit-content h3 {
+        color: #FFD700;
+      }
+
+      .process-section .benefit-content p {
+        color: white;
+      }
+
+      /* FAQ section */
+      .faq-section {
+        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+      }
+
+      .faq-section .section-title,
+      .faq-section .section-subtitle {
+        color: white;
+      }
+
+      .faq-section .card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 24px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+
+      .faq-section .card h3 {
+        color: #FFD700;
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+      }
+
+      .faq-section .card p {
+        color: white;
+        margin-bottom: 0;
+        line-height: 1.6;
+      }
     </style>
   </head>
   <body>
@@ -1240,45 +1478,44 @@
           </a>
         </div>
     </header>
-    <div class="ad-disclosure">
+    <!-- <div class="ad-disclosure">
       <p>ADVERTISEMENT - This content was sponsored by SK Houston Constructions. The information provided is for general informational purposes only.</p>
-    </div>
+    </div> -->
     
     <section class="hero-section">
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <h1 class="hero-title">Transform Your Houston Home: Quality Remodeling You Can Trust</h1>
-            <p class="hero-subtitle">Tired of searching? Get a clear, reliable plan for your kitchen, bathroom, or home addition from Houston's dedicated remodeling experts.</p>
+            <h1 class="hero-title">Building Trust, Delivering Quality.</h1>
+            <p class="hero-subtitle">Transform your home with SK Houston Constructions. Contact us today!
+
+</p>
             
             <div class="hero-benefits">
               <div class="benefit-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48.781 48.781" fill="none">
+                  <path style="fill:#FFD700;" d="M25.334,10.02h-1.476c-0.027,0.413-0.125,0.742-0.292,0.987c-0.168,0.244-0.4,0.446-0.689,0.604    c-0.238,0.128-0.583,0.223-1.039,0.291c-0.457,0.066-0.89,0.101-1.288,0.101v1.295h2.953v9.511H20.55v1.448h7.682v-1.448h-2.897    V10.02H25.334z M35.161,30.578c0.52-0.278,1.011-0.637,1.449-1.076c1.778-1.777,2.244-4.367,1.41-6.575    c2.151-0.971,3.651-3.131,3.651-5.646c0-2.514-1.5-4.673-3.651-5.646c0.834-2.208,0.368-4.795-1.41-6.574    c-1.777-1.778-4.367-2.244-6.574-1.409C29.065,1.5,26.905,0,24.39,0c-2.514,0-4.674,1.5-5.646,3.652    c-2.208-0.834-4.796-0.368-6.574,1.41c-1.779,1.779-2.245,4.367-1.41,6.574c-2.151,0.972-3.652,3.132-3.652,5.646    c0,2.515,1.5,4.675,3.652,5.646c-0.834,2.208-0.368,4.799,1.41,6.575c0.439,0.438,0.929,0.798,1.45,1.077L6.333,44.148    l6.383-1.363l2.25,5.996l7.762-14.455c0.53,0.147,1.085,0.236,1.663,0.236s1.132-0.089,1.662-0.236l7.763,14.455l2.25-5.996    l6.383,1.363L35.161,30.578z M24.4,30.021c-7.076,0-12.813-5.737-12.813-12.813S17.323,4.396,24.4,4.396    c7.075,0,12.813,5.736,12.813,12.812C37.213,24.285,31.476,30.021,24.4,30.021z"></path>
                 </svg>
-                <span>Licensed & Insured</span>
+                <span><strong class="benefit-title">Expert Craftsmanship</strong><br>We take pride in delivering exceptional craftsmanship. Our team of experienced professionals ensures that every detail of your project is executed with precision and care, resulting in a finished product that exceeds expectations.</span>
               </div>
               <div class="benefit-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 36 36" fill="none">
+                  <path style="fill:#FFD700;" d="M34.87,32.21L30,27.37V8.75L27.7,4.52a2,2,0,0,0-3.54,0L22,8.76V19.41L3.71,1.21A1,1,0,0,0,2,1.92V10H4.17v1.6H2V18H4.17v1.6H2v6.65H4.17v1.6H2v5.07a1,1,0,0,0,1,1H34.16a1,1,0,0,0,.71-1.71ZM10,26V16.94L19.07,26Zm18,2.11H24V25.68h4Zm0-4H24V9.25l1.94-3.77L28,9.26Z"></path>
                 </svg>
-                <span>Serving Houston Since 2014</span>
+                <span><strong class="benefit-title">Personalized Design Solutions</strong><br>We understand that your home is a reflection of your unique style and preferences. Our experts work closely with you to create personalized remodeling solutions. From concept to completion, we prioritize your vision, ensuring that the final result is a perfect blend of functionality and aesthetics.</span>
               </div>
               <div class="benefit-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512" fill="none">
+                  <path style="fill:#FFD700;" d="M47.294,422.846c-10.908-10.924-17.615-25.87-17.633-42.462v-61.795H0v61.795  c0.017,49.545,40.23,89.739,89.765,89.774h40.532v-29.67H89.765C73.164,440.48,58.236,433.771,47.294,422.846z M85.931,235.914c21.636,0,39.144-17.508,39.144-39.154c0-21.609-17.507-39.153-39.144-39.153  c-21.619,0-39.154,17.544-39.154,39.153C46.777,218.406,64.312,235.914,85.931,235.914z M179.165,369.308h-54.927v-81.758c0-21.165-17.134-38.318-38.308-38.318  c-21.147,0-38.299,17.152-38.299,38.318v93.146c0,21.155,17.143,38.308,38.299,38.308c2.873,0,70.024-0.195,70.024-0.195  l3.674,56.688c0.258,11.61,9.884,20.818,21.494,20.568c11.628-0.258,20.826-9.884,20.56-21.494l2.233-80.512  C203.915,380.375,192.839,369.308,179.165,369.308z M482.339,318.589v61.795c-0.017,16.592-6.725,31.538-17.632,42.462  c-10.943,10.925-25.871,17.634-42.462,17.642h-40.541v29.67h40.541c49.526-0.036,89.73-40.23,89.756-89.774v-61.795H482.339z M426.069,235.914c21.618,0,39.153-17.508,39.153-39.154c0-21.609-17.535-39.153-39.153-39.153  c-21.636,0-39.145,17.544-39.145,39.153C386.924,218.406,404.433,235.914,426.069,235.914z M464.378,380.695v-93.146c0-21.165-17.17-38.318-38.308-38.318c-21.173,0-38.308,17.152-38.308,38.318v81.758  h-54.927c-13.674,0-24.75,11.067-24.75,24.75l2.233,80.512c-0.267,11.61,8.932,21.236,20.56,21.494  c11.61,0.25,21.235-8.959,21.493-20.568l3.675-56.688c0,0,67.151,0.195,70.024,0.195  C447.224,419.003,464.378,401.851,464.378,380.695z M359.59,159.404c0,7.286-2.353,14.137-6.677,20.294c-4.319,6.165-10.671,11.556-18.464,15.56l-5.686,2.918  l7.376,16.486c-22.37-3.87-43.13-11.148-53.615-15.222l-0.208-0.089l-0.222-0.062c-14.061-4.422-25.048-13.086-30.626-23.335  l-11.85,6.486c7.575,13.753,21.32,24.198,38.028,29.554v0.018c12.976,5.026,40.252,14.581,68.908,17.802l11.712,1.29  l-12.108-27.081c7.109-4.475,13.211-10.026,17.793-16.557c5.743-8.149,9.146-17.792,9.133-28.06  c0.013-12.775-5.266-24.554-13.772-33.77c-8.514-9.252-20.249-16.138-33.713-19.822l-3.555,13.015  c11.254,3.052,20.782,8.781,27.33,15.934C355.956,141.949,359.59,150.339,359.59,159.404z M161.724,156.362l-16.228,36.28l11.722-1.299c40.461-4.52,79.209-18.078,97.602-25.204  c17.478-5.596,32.561-15.142,43.419-27.552c10.952-12.49,17.579-28.015,17.571-44.803c0.008-10.978-2.834-21.458-7.865-30.862  c-7.548-14.118-19.968-25.844-35.337-34.046c-15.356-8.211-33.713-12.944-53.428-12.944c-26.258,0.018-50.153,8.389-67.742,22.286  c-8.786,6.948-15.987,15.293-21.031,24.705c-5.022,9.404-7.851,19.884-7.851,30.862c-0.014,14.003,4.626,27.162,12.499,38.38  C141.813,141.753,150.96,149.956,161.724,156.362z M142.316,69.283c6.081-11.406,16.464-21.396,29.799-28.522  c13.318-7.117,29.536-11.352,47.067-11.334c23.372-0.018,44.411,7.508,59.384,19.358c7.477,5.925,13.429,12.891,17.486,20.498  c4.066,7.615,6.268,15.844,6.268,24.5c-0.014,13.194-5.115,25.497-14.225,35.924c-9.097,10.409-22.206,18.825-37.748,23.709  l-0.196,0.063l-0.208,0.088c-15.929,6.175-48.139,17.437-82.368,22.758l11.605-25.934l-5.698-2.918  c-11.498-5.89-20.911-13.87-27.379-23.087c-6.476-9.226-10.053-19.572-10.066-30.604C136.048,85.127,138.238,76.899,142.316,69.283z"></path>
                 </svg>
-                <span>Locally Owned & Operated</span>
+                <span><strong class="benefit-title">Transparent Communication</strong><br>Clear and open communication is the foundation of a successful remodeling project. We prioritize transparency at every stage, keeping you informed about progress, timelines, and any unexpected developments.</span>
               </div>
             </div>
           </div>
           
           <div class="hero-form-wrapper">
             <div class="hero-form-container">
-              <h2 class="form-title">Get Your Free, No-Obligation Estimate</h2>
+              <h2 class="form-title">Schedule Your Free, No-Obligation Estimate</h2>
               
               <form id="leadForm">
                 <div class="form-grid">
@@ -1355,165 +1592,6 @@
       </div>
     </section>
 
-    <!-- Why Choose Us Section -->
-    <section class="section why-choose-section">
-      <div class="container">
-        <h2 class="section-title">Why Choose SK Houston Constructions</h2>
-        <p class="section-subtitle">We're committed to making your remodeling experience exceptional from start to finish:</p>
-        
-        <div class="grid grid-2">
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Licensed & Insured</h3>
-              <p>We carry all required licenses and insurance for your protection and peace of mind throughout your project.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Transparent Pricing</h3>
-              <p>No surprise costs or hidden fees. We provide detailed estimates and stick to our quotes unless you request changes.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Quality Materials</h3>
-              <p>We only use premium materials that meet or exceed industry standards for longevity and performance.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Experienced Craftsmen</h3>
-              <p>Our team of skilled professionals brings years of experience to every project we undertake.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="section services-section">
-      <div class="container">
-        <h2 class="section-title">Complete Home Remodeling Services in Houston</h2>
-        <p class="section-subtitle">Whatever your vision, we have the expertise to bring it to life:</p>
-        
-        <div class="grid grid-3">
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 5h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"></path>
-                <path d="M2 19h20"></path>
-                <path d="M5 15h14"></path>
-                <path d="M10 9h4"></path>
-              </svg>
-            </div>
-            <h3 class="card-title">Kitchen Remodeling</h3>
-            <div class="card-content">
-              <p>Transform your kitchen into a beautiful, functional space with custom cabinets, countertops, and modern appliances designed for your lifestyle.</p>
-            </div>
-          </div>
-          
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 22h16a2 2 0 0 0 2-2V9a1 1 0 0 0-1-1h-3v10.72a1.01 1.01 0 0 1-1.78.63l-2.94-2.94a.985.985 0 0 1 0-1.4l2.94-2.94A1.01 1.01 0 0 1 18 3.28V3a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16c0 1.1.9 2 2 2Z"/>
-              </svg>
-            </div>
-            <h3 class="card-title">Bathroom Remodeling</h3>
-            <div class="card-content">
-              <p>Create a relaxing retreat with our premium bathroom remodeling services. From luxurious showers to energy-efficient fixtures, we handle it all.</p>
-            </div>
-          </div>
-          
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
-                <path d="M13 16h9V8h-9z"/>
-              </svg>
-            </div>
-            <h3 class="card-title">Home Additions</h3>
-            <div class="card-content">
-              <p>Expand your living space with seamlessly integrated home additions. Add bedrooms, offices, or family rooms designed to match your home's architecture.</p>
-            </div>
-          </div>
-          
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="20" height="14" x="2" y="3" rx="2"/>
-                <path d="M8 21v-4"/>
-                <path d="M16 21v-4"/>
-                <path d="m2 7 20 0"/>
-                <path d="M22 11H2"/>
-                <path d="M16 3v18"/>
-                <path d="M12 3v18"/>
-                <path d="M8 3v18"/>
-              </svg>
-            </div>
-            <h3 class="card-title">Whole Home Renovations</h3>
-            <div class="card-content">
-              <p>Revitalize your entire home with our comprehensive renovation services. We'll coordinate every aspect of your project for a stress-free experience.</p>
-            </div>
-          </div>
-          
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 20h20"/>
-                <path d="M5 20V8.2a2 2 0 0 1 .8-1.6l4.2-3.4a2 2 0 0 1 2.4-.2l4.8 3.4a2 2 0 0 1 .8 1.6V20"/>
-                <path d="M12 12v8"/>
-                <path d="M8 9h8"/>
-                <path d="M8 17h8"/>
-                <path d="M12 3v4"/>
-              </svg>
-            </div>
-            <h3 class="card-title">General Contractor Services</h3>
-            <div class="card-content">
-              <p>From project planning to final inspection, our general contracting services ensure every aspect of your construction project is handled professionally.</p>
-            </div>
-          </div>
-          
-          <div class="card service-card">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-              </svg>
-            </div>
-            <h3 class="card-title">Custom Construction</h3>
-            <div class="card-content">
-              <p>Have a unique vision? Our team specializes in custom construction projects that require innovative solutions and expert craftsmanship.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Project Highlights Section -->
     <section class="section projects-section">
@@ -1573,6 +1651,67 @@
       </div>
     </section>
 
+
+    <!-- Guarantees Section -->
+    <section class="section services-section">
+      <div class="container">
+        <h2 class="section-title">Work With Confidence: We Stand Behind Our Work</h2>
+        <p class="section-subtitle">We follow through on our promises with exceptional service:</p>
+        
+        <div class="grid grid-2">
+          <div class="card benefit-card">
+            <div class="benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Fully Licensed & Insured</h3>
+              <p>We carry all required licenses and insurance for construction, protecting your property and our team throughout the project.</p>
+            </div>
+          </div>
+          
+          <div class="card benefit-card">
+            <div class="benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Satisfaction Focused</h3>
+              <p>Our commitment to excellence means we're not happy until you're thrilled with the results. We prioritize your complete satisfaction.</p>
+            </div>
+          </div>
+          
+          <div class="card benefit-card">
+            <div class="benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Locally Owned & Operated</h3>
+              <p>We have deep roots in the Houston community. Our local knowledge ensures we understand the unique needs of Houston homes.</p>
+            </div>
+          </div>
+          
+          <div class="card benefit-card">
+            <div class="benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Quality Materials & Workmanship</h3>
+              <p>We only use premium materials and employ skilled craftsmen to ensure your remodel is built to last with a solid warranty for your peace of mind.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Testimonials Section -->
     <section class="section testimonials-section">
       <div class="container">
@@ -1617,7 +1756,7 @@
     </section>
     
     <!-- Process Section -->
-    <section class="section why-choose-section" style="background-color: var(--color-gray-50);">
+    <section class="section process-section">
       <div class="container">
         <h2 class="section-title">Your Hassle-Free Remodeling Journey</h2>
         <p class="section-subtitle">We make remodeling straightforward:</p>
@@ -1680,91 +1819,31 @@
       </div>
     </section>
 
-    <!-- Guarantees Section -->
-    <section class="section services-section">
-      <div class="container">
-        <h2 class="section-title">Work With Confidence: We Stand Behind Our Work</h2>
-        <p class="section-subtitle">We follow through on our promises with exceptional service:</p>
-        
-        <div class="grid grid-2">
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Fully Licensed & Insured</h3>
-              <p>We carry all required licenses and insurance for construction, protecting your property and our team throughout the project.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Satisfaction Focused</h3>
-              <p>Our commitment to excellence means we're not happy until you're thrilled with the results. We prioritize your complete satisfaction.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Locally Owned & Operated</h3>
-              <p>We have deep roots in the Houston community. Our local knowledge ensures we understand the unique needs of Houston homes.</p>
-            </div>
-          </div>
-          
-          <div class="card benefit-card">
-            <div class="benefit-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 11 12 14 22 4"></polyline>
-                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-              </svg>
-            </div>
-            <div class="benefit-content">
-              <h3>Quality Materials & Workmanship</h3>
-              <p>We only use premium materials and employ skilled craftsmen to ensure your remodel is built to last with a solid warranty for your peace of mind.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
     <!-- FAQ Section -->
-    <section class="section why-choose-section" style="background-color: var(--color-gray-50);">
+    <section class="section faq-section" style="background: white;">
       <div class="container">
-        <h2 class="section-title">Your Remodeling Questions Answered</h2>
-        <p class="section-subtitle">Common questions our Houston clients ask about their renovation projects</p>
+        <h2 class="section-title" style="color: var(--primary);">Your Remodeling Questions Answered</h2>
+        <p class="section-subtitle" style="color: var(--gray-600);">Common questions our Houston clients ask about their renovation projects</p>
         
         <div class="faq-container" style="max-width: 800px; margin: 0 auto;">
-          <div class="card" style="margin-bottom: var(--space-4);">
-            <h3 style="color: var(--color-primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How long does a typical remodel take?</h3>
-            <p>Timelines vary by project scope. A bathroom might take 3-6 weeks, while a kitchen or addition can take 6-12 weeks. We provide a detailed project schedule after the planning phase.</p>
+          <div class="card" style="margin-bottom: var(--space-4); background: var(--gray-50); border-radius: var(--radius); padding: var(--space-lg);">
+            <h3 style="color: var(--primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How long does a typical remodel take?</h3>
+            <p style="color: var(--gray-700);">Timelines vary by project scope. A bathroom might take 3-6 weeks, while a kitchen or addition can take 6-12 weeks. We provide a detailed project schedule after the planning phase.</p>
           </div>
           
-          <div class="card" style="margin-bottom: var(--space-4);">
-            <h3 style="color: var(--color-primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How much will my remodel cost?</h3>
-            <p>Costs depend entirely on the size, materials, and complexity. We provide a detailed, itemized estimate after our free initial consultation so you know exactly what to expect.</p>
+          <div class="card" style="margin-bottom: var(--space-4); background: var(--gray-50); border-radius: var(--radius); padding: var(--space-lg);">
+            <h3 style="color: var(--primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How much will my remodel cost?</h3>
+            <p style="color: var(--gray-700);">Costs depend entirely on the size, materials, and complexity. We provide a detailed, itemized estimate after our free initial consultation so you know exactly what to expect.</p>
           </div>
           
-          <div class="card" style="margin-bottom: var(--space-4);">
-            <h3 style="color: var(--color-primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">Do I need to move out during the renovation?</h3>
-            <p>Often, you can remain in your home, especially for kitchen or bath remodels. For large-scale renovations or additions, we'll discuss the best approach for your comfort and safety during the planning stage.</p>
+          <div class="card" style="margin-bottom: var(--space-4); background: var(--gray-50); border-radius: var(--radius); padding: var(--space-lg);">
+            <h3 style="color: var(--primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">Do I need to move out during the renovation?</h3>
+            <p style="color: var(--gray-700);">Often, you can remain in your home, especially for kitchen or bath remodels. For large-scale renovations or additions, we'll discuss the best approach for your comfort and safety during the planning stage.</p>
           </div>
           
-          <div class="card">
-            <h3 style="color: var(--color-primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How do you handle unexpected issues?</h3>
-            <p>We build in contingency planning. If unforeseen issues arise (like hidden plumbing problems), we communicate immediately, explain the options, and get your approval before proceeding with any changes to scope or cost.</p>
+          <div class="card" style="background: var(--gray-50); border-radius: var(--radius); padding: var(--space-lg);">
+            <h3 style="color: var(--primary); font-size: var(--font-size-xl); margin-bottom: var(--space-2);">How do you handle unexpected issues?</h3>
+            <p style="color: var(--gray-700);">We build in contingency planning. If unforeseen issues arise (like hidden plumbing problems), we communicate immediately, explain the options, and get your approval before proceeding with any changes to scope or cost.</p>
           </div>
         </div>
       </div>
