@@ -8,218 +8,156 @@ const WORKER_URL = window.location.hostname === 'localhost' || window.location.h
   ? 'https://trello-api.lingering-bar-b004.workers.dev'
   : 'https://trello-api.lingering-bar-b004.workers.dev';
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Get main form and mid-article form
-  const mainForm = document.querySelector('#leadForm') || document.querySelector('form');
-  const midArticleForm = document.querySelector('#midArticleLeadForm');
+// Function to handle form submission
+async function handleFormSubmit(form, event) {
+  event.preventDefault();
   
-  if (!mainForm) return;
+  // Validate all required fields before submission
+  const requiredFields = form.querySelectorAll('[required]');
+  let isValid = true;
+  requiredFields.forEach(field => {
+    if (!validateField(field)) {
+      isValid = false;
+    }
+  });
   
-  // Ensure the main form has the correct ID
-  mainForm.id = 'leadForm';
+  if (!isValid) {
+    return;
+  }
+  
+  // Show loading state
+  const submitBtn = form.querySelector('.submit-btn');
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting...';
+  submitBtn.disabled = true;
+  
+  // Extract article name from the URL path
+  const pathSegments = window.location.pathname.split('/').filter(Boolean);
+  const articleName = pathSegments.length > 0 ? pathSegments[0] : 'homepage';
   
   // Get source and pixel from URL parameters
   const currentParams = new URLSearchParams(window.location.search);
   const source = currentParams.get('source');
   const pixel = currentParams.get('pixel');
   
-  // Handle Other service option
-  const serviceSelect = document.getElementById('service');
-  const otherServiceGroup = document.getElementById('otherServiceGroup');
-  const otherServiceInput = document.getElementById('otherService');
+  // Get form values - using form-specific IDs
+  const prefix = form.id === 'ctaLeadForm' ? 'cta_' : '';
+  const formData = {
+    fullName: document.getElementById(prefix + 'fullName')?.value || '',
+    email: document.getElementById(prefix + 'email')?.value || '',
+    phone: document.getElementById(prefix + 'phone')?.value || '',
+    service: document.getElementById(prefix + 'service')?.value === 'Other' 
+      ? `Other: ${document.getElementById(prefix + 'otherService')?.value || ''}`
+      : document.getElementById(prefix + 'service')?.value || '',
+    consultationDate: document.getElementById(prefix + 'consultationDate')?.value || '',
+    arrivalWindow: document.getElementById(prefix + 'arrivalWindow')?.value || '',
+    address: document.getElementById(prefix + 'address')?.value || '',
+    message: document.getElementById(prefix + 'message')?.value || '',
+    source: source || 'direct',
+    pixel: pixel || '',
+    articleName: articleName,
+    formLocation: form.id === 'ctaLeadForm' ? 'cta_section' : 'hero_section'
+  };
   
-  if (serviceSelect && otherServiceGroup && otherServiceInput) {
-    serviceSelect.addEventListener('change', function() {
-      if (this.value === 'Other') {
-        otherServiceGroup.style.display = 'block';
-        otherServiceInput.required = true;
-      } else {
-        otherServiceGroup.style.display = 'none';
-        otherServiceInput.required = false;
-        otherServiceInput.value = '';
-      }
-    });
-  }
-  
-  // Add validation to required fields in main form
-  const requiredFields = mainForm.querySelectorAll('[required]');
-  requiredFields.forEach(field => {
-    field.addEventListener('blur', function() {
-      validateField(field);
-    });
-  });
-  
-  // Handle mid-article form submission if it exists
-  if (midArticleForm) {
-    midArticleForm.addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      // Get values from mid-form
-      const midName = document.getElementById('midName')?.value || '';
-      const midPhone = document.getElementById('midPhone')?.value || '';
-      
-      // Make sure values are valid
-      if (!midName || !midPhone) {
-        if (!midName) addErrorMessage(document.getElementById('midName'), 'Name is required');
-        if (!midPhone) addErrorMessage(document.getElementById('midPhone'), 'Phone is required');
-        return;
-      }
-      
-      // Track form interaction for mid-form
-      if (typeof trackFormInteraction === 'function') {
-        trackFormInteraction('mid_form_submit', {
-          conversionType: 'mid_lead',
-          leadSource: source || 'direct',
-          leadMedium: new URLSearchParams(window.location.search).get('utm_medium') || 'none',
-          leadCampaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
-        });
-      }
-      
-      // Fill in values in main form
-      const fullNameEl = document.getElementById('fullName');
-      const phoneEl = document.getElementById('phone');
-      if (fullNameEl) fullNameEl.value = midName;
-      if (phoneEl) phoneEl.value = midPhone;
-      
-      // Scroll to main form
-      const mainFormElement = document.querySelector('.contact-section');
-      if (mainFormElement) {
-        mainFormElement.scrollIntoView({ behavior: 'smooth' });
-        
-        // Highlight the main form fields that need to be filled
-        setTimeout(() => {
-          const emailField = document.getElementById('email');
-          if (emailField) {
-            emailField.focus();
-            emailField.style.borderColor = '#4299e1';
-            emailField.style.boxShadow = '0 0 0 3px rgba(66, 153, 225, 0.3)';
-            
-            // Remove highlight after 2 seconds
-            setTimeout(() => {
-              emailField.style.borderColor = '';
-              emailField.style.boxShadow = '';
-            }, 2000);
-          }
-        }, 800);
-      }
+  try {
+    // Submit to our Cloudflare Worker
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin,
+        'Referer': window.location.href
+      },
+      body: JSON.stringify(formData)
     });
     
-    // Add validation to mid-form fields
-    const midRequiredFields = midArticleForm.querySelectorAll('[required]');
-    midRequiredFields.forEach(field => {
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      // Create URL parameters for thank-you page
+      const params = new URLSearchParams({
+        service: formData.service || '',
+        date: formData.consultationDate || '',
+        time: formData.arrivalWindow || '',
+        name: formData.fullName || '',
+        source: formData.source || '',
+        pixel: formData.pixel || ''
+      });
+      
+      // Show success message before redirect
+      submitBtn.textContent = 'Success!';
+      submitBtn.style.backgroundColor = '#48bb78';
+      
+      // Small delay to show success state before redirect
+      setTimeout(() => {
+        // Get current directory path
+        const currentPath = window.location.pathname.split('/').slice(0, -1).join('/');
+        // Redirect to thank-you page in the same directory
+        window.location.href = `${currentPath}/thank-you.html?${params.toString()}`;
+      }, 1000);
+    } else {
+      throw new Error(result.error || 'Unknown error occurred');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Error adding your details to our system. Please try again or contact us directly.\n\nError details: ' + error.message);
+    
+    // Reset button state
+    submitBtn.textContent = originalBtnText;
+    submitBtn.disabled = false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Setup both forms
+  const forms = ['leadForm', 'ctaLeadForm'];
+  
+  forms.forEach(formId => {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    
+    // Handle Other service option
+    const prefix = formId === 'ctaLeadForm' ? 'cta_' : '';
+    const serviceSelect = document.getElementById(prefix + 'service');
+    const otherServiceGroup = document.getElementById(prefix + 'otherServiceGroup');
+    const otherServiceInput = document.getElementById(prefix + 'otherService');
+    
+    // Set minimum date for date picker to today
+    const dateInput = document.getElementById(prefix + 'consultationDate');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+    }
+    
+    if (serviceSelect && otherServiceGroup && otherServiceInput) {
+      serviceSelect.addEventListener('change', function() {
+        if (this.value === 'Other') {
+          otherServiceGroup.style.display = 'block';
+          otherServiceInput.required = true;
+        } else {
+          otherServiceGroup.style.display = 'none';
+          otherServiceInput.required = false;
+          otherServiceInput.value = '';
+        }
+      });
+    }
+    
+    // Add validation to required fields
+    const requiredFields = form.querySelectorAll('[required]');
+    requiredFields.forEach(field => {
       field.addEventListener('blur', function() {
         validateField(field);
       });
     });
-  }
-  
-  // Form submission handler for main form (using the approach from the working version)
-  const leadForm = document.getElementById('leadForm');
-  if (leadForm) {
-    leadForm.addEventListener('submit', async function(event) {
-      event.preventDefault();
-      
-      // Validate all required fields before submission
-      let isValid = true;
-      requiredFields.forEach(field => {
-        if (!validateField(field)) {
-          isValid = false;
-        }
-      });
-      
-      if (!isValid) {
-        return;
-      }
-      
-      // Show loading state
-      const submitBtn = mainForm.querySelector('.submit-btn');
-      const originalBtnText = submitBtn.textContent;
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
-      
-      // Extract article name from the URL path
-      const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      const articleName = pathSegments.length > 0 ? pathSegments[0] : 'homepage';
-      console.log('Current path:', window.location.pathname);
-      console.log('Path segments:', pathSegments);
-      console.log('Article name:', articleName);
-      
-      // Get form values
-      const formData = {
-        fullName: document.getElementById('fullName')?.value || '',
-        email: document.getElementById('email')?.value || '',
-        phone: document.getElementById('phone')?.value || '',
-        service: document.getElementById('service')?.value === 'Other' 
-          ? `Other: ${document.getElementById('otherService')?.value || ''}`
-          : document.getElementById('service')?.value || '',
-        consultationDate: document.getElementById('consultationDate')?.value || '',
-        arrivalWindow: document.getElementById('arrivalWindow')?.value || '',
-        address: document.getElementById('address')?.value || '',
-        message: document.getElementById('message')?.value || '',
-        source: source || 'direct',
-        pixel: pixel || '',
-        articleName: articleName, // Add article name to form data
-        fromMidForm: document.getElementById('midName')?.value && document.getElementById('midName')?.value === document.getElementById('fullName')?.value
-      };
-      
-      try {
-        console.log('Submitting form data:', formData);
-        console.log('Using worker URL:', WORKER_URL);
-        
-        // Submit to our Cloudflare Worker
-        const response = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Origin': window.location.origin,
-            'Referer': window.location.href
-          },
-          body: JSON.stringify(formData)
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.text();
-          throw new Error(errorData);
-        }
-        
-        const result = await response.json();
-        console.log('Response data:', result);
-        
-        if (result.success) {
-          // Create URL parameters for thank-you page
-          const params = new URLSearchParams({
-            service: formData.service || '',
-            date: formData.consultationDate || '',
-            time: formData.arrivalWindow || '',
-            name: formData.fullName || '',
-            source: formData.source || '',
-            pixel: formData.pixel || ''
-          });
-          
-          // Show success message before redirect
-          submitBtn.textContent = 'Success!';
-          submitBtn.style.backgroundColor = '#48bb78';
-          
-          // Small delay to show success state before redirect
-          setTimeout(() => {
-            // Get current directory path
-            const currentPath = window.location.pathname.split('/').slice(0, -1).join('/');
-            // Redirect to thank-you page in the same directory
-            window.location.href = `${currentPath}/thank-you.html?${params.toString()}`;
-          }, 1000);
-        } else {
-          throw new Error(result.error || 'Unknown error occurred');
-        }
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        alert('Error adding your details to our system. Please try again or contact us directly.\n\nError details: ' + error.message);
-        
-        // Reset button state
-        submitBtn.textContent = originalBtnText;
-        submitBtn.disabled = false;
-      }
-    });
-  }
+    
+    // Add form submission handler
+    form.addEventListener('submit', (event) => handleFormSubmit(form, event));
+  });
 });
 
 /**
@@ -254,7 +192,7 @@ function validateField(field) {
   }
   
   // Phone validation
-  if ((field.id === 'phone' || field.id === 'midPhone') && field.value.trim()) {
+  if ((field.id === 'phone' || field.id === 'cta_phone' || field.id === 'midPhone') && field.value.trim()) {
     const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     if (!phoneRegex.test(field.value)) {
       addErrorMessage(field, 'Please enter a valid phone number');

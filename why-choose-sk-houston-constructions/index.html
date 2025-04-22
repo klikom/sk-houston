@@ -43,7 +43,7 @@
     <style>
       /* Keeping only essential styles for fast initial render */
       .hero-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/budget-friendly-bathroom-remodeling-tips/main-1.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -143,7 +143,7 @@
 
       /* Hero section styles */
       .hero-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -218,7 +218,7 @@
         display: flex;
         align-items: flex-start;
         gap: 12px;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.08);
         padding: 20px;
         border-radius: 12px;
         backdrop-filter: blur(10px);
@@ -227,7 +227,7 @@
       }
       
       .benefit-badge:hover {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.12);
         transform: translateY(-2px);
       }
       
@@ -583,7 +583,7 @@
       
       /* Services section */
       .services-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/service-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -675,7 +675,7 @@
       
       /* Why choose us section */
       .why-choose-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -911,71 +911,72 @@
       
       /* CTA section */
       .cta-section {
-        background-image: linear-gradient(rgba(0, 40, 80, 0.92), rgba(0, 40, 80, 0.97)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/cta-bg.png');
+        background-image: linear-gradient(rgba(0, 40, 80, 0.75), rgba(0, 40, 80, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/cta-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
-        text-align: center;
+        padding: var(--section-spacing) 0;
         position: relative;
-        border-top: 4px solid #FFD700;
-        margin-bottom: 0;
-        padding-bottom: var(--space-12);
+        z-index: 1;
       }
       
       .cta-content {
         max-width: 800px;
         margin: 0 auto;
-        padding: 0 var(--container-padding);
+        text-align: center;
+        margin-bottom: 48px;
         position: relative;
         z-index: 2;
       }
       
-      .cta-title {
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+      .cta-section .hero-form-wrapper {
         position: relative;
-        display: inline-block;
-        padding-bottom: 15px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        color: var(--gray-100);
+        z-index: 3;
+        max-width: 600px;
+        margin: 0 auto;
       }
       
-      .cta-title::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 3px;
-        background: #FFD700;
-        border-radius: 3px;
+      .cta-section .hero-form-container {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        padding: clamp(20px, 5vw, 32px);
+        width: 100%;
+        position: relative;
+        z-index: 4;
       }
-      
-      .cta-text {
-        font-size: clamp(1.125rem, 1.5vw, 1.25rem);
-        margin-bottom: clamp(1.5rem, 2vw, 2rem);
-        opacity: 1;
-        line-height: 1.6;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-      }
-      
-      .cta-button {
-        display: inline-block;
-        background-color: #FFD700;
+
+      .cta-section .form-title {
         color: var(--primary);
-        font-weight: bold;
-        padding: 0.75rem 1.5rem;
-        border-radius: var(--radius);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        font-size: clamp(1rem, 1.25vw, 1.125rem);
+        font-size: clamp(20px, 4vw, 24px);
+        text-align: center;
+        margin-bottom: clamp(16px, 4vw, 24px);
+        font-weight: 700;
       }
-      
-      .cta-button:hover {
-        background-color: var(--gray-100);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+      .cta-section .form-label {
+        color: var(--gray-700);
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .cta-section .form-control {
+        background-color: var(--gray-50);
+        border: 1px solid var(--gray-300);
+        color: var(--gray-800);
+      }
+
+      .cta-section .submit-btn {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+      }
+
+      .cta-section .hero-form-container p {
+        color: var(--gray-600);
+        text-align: center;
+        margin-top: 16px;
+        font-size: 14px;
       }
       
       /* Footer styles */
@@ -983,8 +984,11 @@
         background-color: var(--gray-50);
         padding-top: clamp(2rem, 5vw, 3rem);
         padding-bottom: clamp(2rem, 5vw, 3rem);
-        border-top: 1px solid var(--gray-200);
         margin-top: 0;
+      }
+      
+      .footer-container {
+        border-top: none;
       }
       
       .contact-info {
@@ -1404,7 +1408,7 @@
 
       /* Process section */
       .process-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -1432,7 +1436,7 @@
 
       /* FAQ section */
       .faq-section {
-        background-image: linear-gradient(rgba(0, 58, 112, 0.85), rgba(0, 58, 112, 0.92)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
+        background-image: linear-gradient(rgba(0, 58, 112, 0.75), rgba(0, 58, 112, 0.75)), url('https://sk-houston.b-cdn.net/why-choose-sk-houston-constructionswhy-choose-sk-houston-constructions/hero-bg.png');
         background-size: cover;
         background-position: center;
         color: white;
@@ -1461,6 +1465,38 @@
         color: white;
         margin-bottom: 0;
         line-height: 1.6;
+      }
+
+      /* Sticky CTA */
+      .sticky-cta {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--primary);
+        color: white;
+        text-align: center;
+        padding: 12px;
+        z-index: 100;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      
+      .sticky-cta p {
+        margin: 0;
+      }
+      
+      .sticky-cta a {
+        color: #FFD700;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .sticky-cta a:hover {
+        color: white;
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -1853,10 +1889,82 @@
     <section class="section cta-section">
       <div class="container">
         <div class="cta-content">
-          <h2 class="cta-title">Ready to Start Your Houston Home Transformation?</h2>
-          <p class="cta-text">Our expert team is ready to bring your vision to life with quality craftsmanship and exceptional service.</p>
-          <a href="#leadForm" class="btn btn-primary btn-lg">Get Your Free Estimate Today</a>
-          <!-- Removed: <p class="cta-phone">Or call us directly: <a href="tel:+18325761810">+1 (832) 576-1810</a></p> -->
+          <h2 class="section-title" style="color: white;">Ready to Start Your Home Transformation?</h2>
+          <p class="section-subtitle" style="color: white; margin-bottom: 48px;">Our expert team is ready to bring your vision to life with quality craftsmanship and exceptional service.</p>
+        
+          <div class="hero-form-container" style="max-width: 600px; margin: 0 auto; background: white; padding: 32px; border-radius: 12px;">
+            <h2 class="form-title">Book Your Free Consultation</h2>
+            
+            <form id="ctaLeadForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cta_fullName" class="form-label">Full Name</label>
+                  <input type="text" id="cta_fullName" name="fullName" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="cta_email" class="form-label">Email Address</label>
+                  <input type="email" id="cta_email" name="email" class="form-control" required>
+                </div>
+              </div>
+              
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cta_phone" class="form-label">Phone Number</label>
+                  <input type="tel" id="cta_phone" name="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="cta_service" class="form-label">Service Needed</label>
+                  <select id="cta_service" name="service" class="form-control" required>
+                    <option value="">Select a service</option>
+                    <option value="Kitchen Remodel">Kitchen Remodel</option>
+                    <option value="Bathroom Remodel">Bathroom Remodel</option>
+                    <option value="Home Addition">Home Addition</option>
+                    <option value="Whole Home Renovation">Whole Home Renovation</option>
+                    <option value="General Construction">General Construction</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group" id="cta_otherServiceGroup" style="display: none;">
+                <label for="cta_otherService" class="form-label">Please Specify</label>
+                <input type="text" id="cta_otherService" name="otherService" class="form-control">
+              </div>
+              
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cta_consultationDate" class="form-label">Preferred Date</label>
+                  <input type="date" id="cta_consultationDate" name="consultationDate" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                  <label for="cta_arrivalWindow" class="form-label">Preferred Time</label>
+                  <select id="cta_arrivalWindow" name="arrivalWindow" class="form-control">
+                    <option value="">Select a time</option>
+                    <option value="Morning (8am-12pm)">Morning (8am-12pm)</option>
+                    <option value="Afternoon (12pm-5pm)">Afternoon (12pm-5pm)</option>
+                    <option value="Evening (5pm-8pm)">Evening (5pm-8pm)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="cta_address" class="form-label">Project Address</label>
+                <input type="text" id="cta_address" name="address" class="form-control" placeholder="Street Address, City, ZIP">
+              </div>
+              
+              <div class="form-group">
+                <label for="cta_message" class="form-label">Project Details</label>
+                <textarea id="cta_message" name="message" class="form-control textarea-control" rows="3" placeholder="Tell us more about your project..."></textarea>
+              </div>
+              
+              <button type="submit" class="submit-btn">Get Your Free Estimate Today!</button>
+              
+              <p style="color: var(--gray-600); text-align: center; margin-top: 16px; font-size: 14px;">We value your privacy. Your information will never be shared.</p>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -1897,55 +2005,114 @@
     <script src="form.js?v=1.0.3"></script>
     
     <script>
-      // Form tracking implementation
+      // Intersection Observer for sticky CTA
       document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('leadForm');
-        const formFields = form.querySelectorAll('input, select, textarea');
-        
-        // Track form field interactions
-        formFields.forEach(field => {
-          field.addEventListener('focus', () => {
-            trackFormInteraction('field_focus', { fieldName: field.name });
-          });
+        const footer = document.querySelector('.site-footer');
+        const stickyCta = document.querySelector('.sticky-cta');
+
+        if (footer && stickyCta) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              // When footer is intersecting, hide the sticky CTA
+              stickyCta.style.opacity = entry.isIntersecting ? '0' : '1';
+              stickyCta.style.visibility = entry.isIntersecting ? 'hidden' : 'visible';
+            },
+            {
+              root: null, // viewport
+              threshold: 0.1 // trigger when even 10% of the footer is visible
+            }
+          );
+
+          observer.observe(footer);
+        }
+      });
+
+      // Form tracking implementation for both forms
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to setup form tracking
+        function setupFormTracking(formId) {
+          const form = document.getElementById(formId);
+          if (!form) return;
+
+          const formFields = form.querySelectorAll('input, select, textarea');
           
-          field.addEventListener('change', () => {
-            trackFormInteraction('field_complete', { 
-              fieldName: field.name,
-              fieldType: field.type
+          // Track form field interactions
+          formFields.forEach(field => {
+            field.addEventListener('focus', () => {
+              trackFormInteraction('field_focus', { fieldName: field.name });
+            });
+            
+            field.addEventListener('change', () => {
+              trackFormInteraction('field_complete', { 
+                fieldName: field.name,
+                fieldType: field.type
+              });
             });
           });
-        });
-        
-        // Track form errors
-        form.addEventListener('invalid', (e) => {
-          if (e.target.validationMessage) {
-            trackFormInteraction('form_error', {
-              fieldName: e.target.name,
-              errorMessage: e.target.validationMessage
+          
+          // Track form errors
+          form.addEventListener('invalid', (e) => {
+            if (e.target.validationMessage) {
+              trackFormInteraction('form_error', {
+                fieldName: e.target.name,
+                errorMessage: e.target.validationMessage
+              });
+            }
+          }, true);
+          
+          // Track form submission
+          form.addEventListener('submit', (e) => {
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+              data[key] = value;
+            }
+            
+            // Enhanced tracking data
+            trackFormInteraction('form_submit', {
+              serviceRequested: data.service,
+              zipCode: data.zipCode,
+              conversionType: 'lead',
+              conversionValue: '100',
+              orderId: Date.now().toString(), // Unique identifier for the lead
+              leadSource: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
+              leadMedium: new URLSearchParams(window.location.search).get('utm_medium') || 'none',
+              leadCampaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
+            });
+          });
+
+          // Show/hide other service field when "Other" is selected
+          const serviceField = form.querySelector('[name="service"]');
+          const otherServiceGroup = form.querySelector('#' + formId.replace('Form', '_otherServiceGroup'));
+          
+          if (serviceField && otherServiceGroup) {
+            serviceField.addEventListener('change', function() {
+              if (this.value === 'Other') {
+                otherServiceGroup.style.display = 'block';
+              } else {
+                otherServiceGroup.style.display = 'none';
+              }
             });
           }
-        }, true);
-        
-        // Track form submission
-        form.addEventListener('submit', (e) => {
-          const formData = new FormData(form);
-          const data = {};
-          for (let [key, value] of formData.entries()) {
-            data[key] = value;
+
+          // Set min date for date picker to today
+          const dateField = form.querySelector('[name="consultationDate"]');
+          if (dateField) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            if (mm < 10) mm = '0' + mm;
+            if (dd < 10) dd = '0' + dd;
+            
+            const todayStr = yyyy + '-' + mm + '-' + dd;
+            dateField.min = todayStr;
           }
-          
-          // Enhanced tracking data
-          trackFormInteraction('form_submit', {
-            serviceRequested: data.service,
-            zipCode: data.zipCode,
-            conversionType: 'lead',
-            conversionValue: '100',
-            orderId: Date.now().toString(), // Unique identifier for the lead
-            leadSource: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
-            leadMedium: new URLSearchParams(window.location.search).get('utm_medium') || 'none',
-            leadCampaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
-          });
-        });
+        }
+
+        // Setup tracking for both forms
+        setupFormTracking('leadForm');
+        setupFormTracking('ctaLeadForm');
       });
       
       // Function to scroll to form
@@ -1974,34 +2141,6 @@
             heroFormWrapper.classList.add('animate');
           }
         }, 300);
-        
-        // Show/hide other service field when "Other" is selected
-        const serviceField = document.getElementById('service');
-        const otherServiceGroup = document.getElementById('otherServiceGroup');
-        
-        if (serviceField && otherServiceGroup) {
-          serviceField.addEventListener('change', function() {
-            if (this.value === 'Other') {
-              otherServiceGroup.style.display = 'block';
-            } else {
-              otherServiceGroup.style.display = 'none';
-            }
-          });
-        }
-        
-        // Set min date for date picker to today
-        const dateField = document.getElementById('consultationDate');
-        if (dateField) {
-          const today = new Date();
-          const yyyy = today.getFullYear();
-          let mm = today.getMonth() + 1;
-          let dd = today.getDate();
-          if (mm < 10) mm = '0' + mm;
-          if (dd < 10) dd = '0' + dd;
-          
-          const todayStr = yyyy + '-' + mm + '-' + dd;
-          dateField.min = todayStr;
-        }
         
         // Smooth scroll to form when CTA buttons are clicked
         const ctaButtons = document.querySelectorAll('a[href="#leadForm"]');
